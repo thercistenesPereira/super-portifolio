@@ -1,10 +1,29 @@
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
+from rest_framework import viewsets
+from .models import Profile, Project, CertifyingInstitution, Certificate
+from .serializers import (
+    ProfileSerializer,
+    ProjectSerializer,
+    CertifyingInstitutionSerializer,
+    CertificateSerializer,
+)
 
 
 # Create your views here.
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def protected_view(request):
-    return Response({"message": "Você está autenticado!"})
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
+class CertifyingInstitutionViewSet(viewsets.ModelViewSet):
+    queryset = CertifyingInstitution.objects.all()
+    serializer_class = CertifyingInstitutionSerializer
+
+
+class CertificateViewSet(viewsets.ModelViewSet):
+    queryset = Certificate.objects.all()
+    serializer_class = CertificateSerializer

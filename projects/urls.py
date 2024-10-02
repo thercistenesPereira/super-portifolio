@@ -1,13 +1,19 @@
-from django.urls import path
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
+from rest_framework import routers
+from django.urls import path, include
+from .views import (
+    ProfileViewSet,
+    ProjectViewSet,
+    CertifyingInstitutionViewSet,
+    CertificateViewSet,
 )
 
 
+router = routers.DefaultRouter()
+router.register(r"profiles", ProfileViewSet)
+router.register(r"projects", ProjectViewSet)
+router.register(r"certificates", CertificateViewSet)
+router.register(r"certifying-institutions", CertifyingInstitutionViewSet)
+
 urlpatterns = [
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path("", include(router.urls)),
 ]
