@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Super Portfolio {% endblock %}
+
+{% block content %}
+    <header class="profile-infos-container">
+        <p>PROFILE</p>
+        <p>GitHub</p>
+        <p>Linkedin</p>
+    </header>
+    <section>
+        {% for profile in profiles %}
+            <p>{{ profile }}</p>
+        {% empty %}
+            <p>No profiles found.</p>
+        {% endfor %}
+    </section>
+{% endblock %}
