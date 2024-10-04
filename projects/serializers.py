@@ -5,20 +5,13 @@ from .models import Profile, Project, CertifyingInstitution, Certificate
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ["name", "github", "linkedin", "bio"]
+        fields = "__all__"
 
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = [
-            "name",
-            "description",
-            "github",
-            "keyword",
-            "key_skill",
-            "profile",
-        ]
+        fields = "__all__"
 
 
 class CertificateSerializer(serializers.ModelSerializer):

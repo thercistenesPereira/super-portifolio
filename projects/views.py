@@ -6,12 +6,18 @@ from .serializers import (
     CertifyingInstitutionSerializer,
     CertificateSerializer,
 )
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # Create your views here.
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+    def get_profile(self):
+        if self.request.method == "GET":
+            return [AllowAny()]
+        return [IsAuthenticated()]
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
