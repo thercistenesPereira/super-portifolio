@@ -19,9 +19,10 @@ def validate_profile_fields(profile):
 def validate_project_fields(project):
     validate_field_length(project.name, "name", 50)
     validate_field_length(project.description, "description", 500)
-    validate_field_length(project.github, "github_url")
     validate_field_length(project.keyword, "keyword", 50)
     validate_field_length(project.key_skill, "key_skill", 50)
+    if not project.github_url:
+        raise ValidationError("O campo github_url não pode estar vazio.")
 
 
 def validate_certifying_institution(institution):
