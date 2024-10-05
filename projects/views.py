@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .models import Profile, Project, CertifyingInstitution, Certificate
 from .serializers import (
     ProfileSerializer,
@@ -6,9 +6,8 @@ from .serializers import (
     CertifyingInstitutionSerializer,
     CertificateSerializer,
 )
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.shortcuts import render
-# from rest_framework.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import render, get_object_or_404
 
 
 # Create your views here.
@@ -18,15 +17,18 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.request.method == "GET":
-            return [AllowAny()]
-        return [IsAuthenticated()]
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
 
     def retrieve(self, request, *args, **kwargs):
         if request.method == "GET":
-            profile_id = kwargs.get("pk")
-            profile = Profile.objects.get(id=profile_id)
+            profile = get_object_or_404(Profile, pk=kwargs["pk"])
 
-            return render(request, "profile_detail.html", {"profile": profile})
+            return render(
+                request,
+                "profile_detail.html",  # Caminho do template corrigido
+                {"profile": profile},
+            )
         return super().retrieve(request, *args, **kwargs)
 
 
