@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, permissions
 from .models import Profile, Project, CertifyingInstitution, Certificate
 from .serializers import (
     ProfileSerializer,
@@ -20,9 +20,16 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return [IsAuthenticated()]
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectListCreateView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class CertifyingInstitutionViewSet(viewsets.ModelViewSet):
